@@ -32,25 +32,19 @@
     .row.right { flex-direction: row-reverse; }
     .row img { flex: 0 0 200px; max-width: 200px; margin: 0 20px; border-radius: 4px; }
     .row .text { flex: 1; }
+    /* Specs container for horizontal scroll */
+    .specs-container { overflow-x: auto; -webkit-overflow-scrolling: touch; }
     /* Specs grid */
-    .specs-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 20px; }
+    .specs-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 20px; min-width: 100%; }
     .group { background: #fff; }
     .group h3 { margin: 0; padding: 10px; background: #f5f5f5; font-size: 18px; color: #333; border-bottom: 1px solid #ddd; }
     .group table { width: 100%; border-collapse: collapse; }
     .group table th, .group table td { text-align: left; padding: 8px; border-bottom: 1px solid #eee; }
     .group table tr:nth-child(even) { background: #fafafa; }
-    /* Lightbox */
-    #lightbox { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); align-items: center; justify-content: center; z-index: 1000; }
-    #lightbox.open { display: flex; }
-    .lightbox-content { position: relative; text-align: center; }
-    #lightboxImage { max-width: 80vw; max-height: 80vh; border-radius: 8px; }
-    .close { position: absolute; top: -10px; right: -10px; font-size: 40px; color: #fff; cursor: pointer; }
-    #lbPrev, #lbNext { position: absolute; top: 50%; transform: translateY(-50%); font-size: 60px; color: #fff; cursor: pointer; user-select: none; }
-    #lbPrev { left: -60px; }
-    #lbNext { right: -60px; }
-    .lb-thumbnails { display: flex; justify-content: center; margin-top: 20px; }
-    .lb-thumbnails img { width: 60px; height: 60px; object-fit: cover; margin: 0 5px; border-radius: 4px; cursor: pointer; border: 2px solid transparent; }
-    .lb-thumbnails img.active { border-color: #fff; }
+    /* Responsive single column */
+    @media (max-width: 600px) {
+      .specs-grid { grid-template-columns: 1fr; }
+    }
   </style>
 </head>
 <body>
@@ -78,11 +72,13 @@
         </ul>
       </div>
     </div>
+
     <!-- Navigation Buttons -->
     <div class="nav-buttons">
       <button class="active" data-target="satinalma">Satın Alma Nedenleri</button>
       <button data-target="ozellikler">Ürün Özellikleri</button>
     </div>
+
     <!-- Purchase Reasons -->
     <div class="section-header"><h2>Satın Alma Nedenleri</h2></div>
     <section id="satinalma">
@@ -108,99 +104,75 @@
         </div>
       </div>
     </section>
+
     <!-- Technical Specs -->
     <div class="section-header"><h2>Ürün Özellikleri</h2></div>
     <section id="ozellikler">
-      <div class="specs-grid">
-        <div class="group">
-          <h3>Performans</h3>
-          <table>
-            <tr><th>Ürün tipi</th><td>Kulaklık</td></tr>
-            <tr><th>Takma tipi</th><td>Saç bandı</td></tr>
-            <tr><th>Önerilen kullanım</th><td>Aramalar/Müzik</td></tr>
-            <tr><th>Kulaklık türü</th><td>Binoral</td></tr>
-            <tr><th>Ürün rengi</th><td>Siyah</td></tr>
-            <tr><th>Oynatma tuşları</th><td>Aramayı cevapla/sonlandır, Bluetooth eşleştirme, Ses +, Volume -</td></tr>
-            <tr><th>Ses kontrolü</th><td>Tuşlu</td></tr>
-            <tr><th>Kontrol ünitesi</th><td>On-ear control unit</td></tr>
-            <tr><th>Katlanır</th><td>✔️</td></tr>
-          </table>
-        </div>
-        <div class="group">
-          <h3>Kulaklık</h3>
-          <table>
-            <tr><th>Sürücü türü</th><td>Dinamik</td></tr>
-            <tr><th>Gürültü kesen</th><td>✔️</td></tr>
-            <tr><th>Gürültü azaltma türü</th><td>Aktif</td></tr>
-            <tr><th>THD</th><td>0,3%</td></tr>
-          </table>
-        </div>
-        <div class="group">
-          <h3>Mikrofon</h3>
-          <table>
-            <tr><th>Tipi</th><td>Ankastre</td></tr>
-            <tr><th>Frekans</th><td>80 - 6000 Hz</td></tr>
-            <tr><th>Tip</th><td>Yönsüz</td></tr>
-            <tr><th>Adet</th><td>2</td></tr>
-            <tr><th>MEMS</th><td>✔️</td></tr>
-          </table>
-        </div>
-        <div class="group">
-          <h3>Batarya</h3>
-          <table>
-            <tr><th>Pil türü</th><td>Yerleşik LiPo 600 mAh</td></tr>
-            <tr><th>Oynatma süresi</th><td>30 Saat</td></tr>
-            <tr><th>Şarj süresi</th><td>2 Saat (USB-C)</td></tr>
-          </table>
+      <div class="specs-container">
+        <div class="specs-grid">
+          <div class="group">
+            <h3>Performans</h3>
+            <table>
+              <tr><th>Ürün tipi</th><td>Kulaklık</td></tr>
+              <tr><th>Takma tipi</th><td>Saç bandı</td></tr>
+              <tr><th>Önerilen kullanım</th><td>Aramalar/Müzik</td></tr>
+              <tr><th>Kulaklık türü</th><td>Binoral</td></tr>
+              <tr><th>Ürün rengi</th><td>Siyah</td></tr>
+              <tr><th>Oynatma tuşları</th><td>Aramayı cevapla/sonlandır, Bluetooth eşleştirme, Ses +, Volume -</td></tr>
+              <tr><th>Ses kontrolü</th><td>Tuşlu</td></tr>
+              <tr><th>Kontrol ünitesi</th><td>On-ear control unit</td></tr>
+              <tr><th>Katlanır</th><td>✔️</td></tr>
+            </table>
+          </div>
+          <div class="group">
+            <h3>Kulaklık</h3>
+            <table>
+              <tr><th>Sürücü türü</th><td>Dinamik</td></tr>
+              <tr><th>Gürültü kesen</th><td>✔️</td></tr>
+              <tr><th>Gürültü azaltma türü</th><td>Aktif</td></tr>
+              <tr><th>THD</th><td>0,3%</td></tr>
+            </table>
+          </div>
+          <div class="group">
+            <h3>Mikrofon</h3>
+            <table>
+              <tr><th>Tipi</th><td>Ankastre</td></tr>
+              <tr><th>Frekans</th><td>80 - 6000 Hz</td></tr>
+              <tr><th>Tip</th><td>Yönsüz</td></tr>
+              <tr><th>Adet</th><td>2</td></tr>
+              <tr><th>MEMS</th><td>✔️</td></tr>
+            </table>
+          </div>
+          <div class="group">
+            <h3>Batarya</h3>
+            <table>
+              <tr><th>Pil türü</th><td>Yerleşik LiPo 600 mAh</td></tr>
+              <tr><th>Oynatma süresi</th><td>30 Saat</td></tr>
+              <tr><th>Şarj süresi</th><td>2 Saat (USB-C)</td></tr>
+            </table>
+          </div>
         </div>
       </div>
     </section>
-  </div>
-  <!-- Lightbox Modal -->
-  <div id="lightbox">
-    <div class="lightbox-content">
-      <span class="close">&times;</span>
-      <span id="lbPrev">&#10094;</span>
-      <img id="lightboxImage" src="" alt="" />
-      <span id="lbNext">&#10095;</span>
-      <div class="lb-thumbnails">
-        <img src="https://sennheiser-hearing.com.tr/cdn/shop/files/sennheiser-hd-450-bt-siyah-kulaklik.jpg?v=1736170924&width=600" data-large="https://sennheiser-hearing.com.tr/cdn/shop/files/sennheiser-hd-450-bt-siyah-kulaklik.jpg?v=1736170924&width=600" class="active" />
-        <img src="https://sennheiser-hearing.com.tr/cdn/shop/files/sennheiser-hd450bt-siyah-kulaklik.jpg?v=1736170924&width=600" data-large="https://sennheiser-hearing.com.tr/cdn/shop/files/sennheiser-hd450bt-siyah-kulaklik.jpg?v=1736170924&width=600" />
-        <img src="https://sennheiser-hearing.com.tr/cdn/shop/files/hd-450bt-siyah-kablosuz-kulak-ustu-kulaklik.jpg?v=1736170924&width=600" data-large="https://sennheiser-hearing.com.tr/cdn/shop/files/hd-450bt-siyah-kablosuz-kulak-ustu-kulaklik.jpg?v=1736170924&width=600" />
-        <img src="https://sennheiser-hearing.com.tr/cdn/shop/files/sennheiser-hd-450-bt-siyah-kulaklik.jpg?v=1736170924&width=600" data-large="https://sennheiser-hearing.com.tr/cdn/shop/files/sennheiser-hd-450-bt-siyah-kulaklik.jpg?v=1736170924&width=600" />
-      </div>
-    </div>
+
   </div>
   <script>
-    // Thumbnail <-> main image
-    document.querySelectorAll('.thumbnails img').forEach(thumb => thumb.addEventListener('click', () => {
-      document.querySelectorAll('.thumbnails img').forEach(t => t.classList.remove('active'));
-      thumb.classList.add('active'); document.getElementById('mainImage').src = thumb.dataset.large;
-    }));
-    // Lightbox open
-    const main = document.getElementById('mainImage'), lightbox = document.getElementById('lightbox'), lbImg = document.getElementById('lightboxImage');
-    const lbThumbs = document.querySelectorAll('.lb-thumbnails img');
-    main.addEventListener('click', () => {
-      lightbox.classList.add('open'); lbImg.src = main.src;
-      lbThumbs.forEach(t => t.classList.toggle('active', t.dataset.large === lbImg.src));
+    // Thumbnail click to change main image
+    document.querySelectorAll('.thumbnails img').forEach(thumb => {
+      thumb.addEventListener('click', () => {
+        document.querySelectorAll('.thumbnails img').forEach(t => t.classList.remove('active'));
+        thumb.classList.add('active');
+        document.getElementById('mainImage').src = thumb.dataset.large;
+      });
     });
-    // Lightbox close
-    document.querySelector('.close').addEventListener('click', () => lightbox.classList.remove('open'));
-    // Lightbox thumbnail click
-    lbThumbs.forEach(thumb => thumb.addEventListener('click', () => {
-      lbThumbs.forEach(t => t.classList.remove('active'));
-      thumb.classList.add('active'); lbImg.src = thumb.dataset.large;
-    }));
-    // Prev/Next
-    function idx() { return Array.from(lbThumbs).findIndex(t => t.dataset.large === lbImg.src); }
-    function go(i) { const k = (i + lbThumbs.length) % lbThumbs.length; lbThumbs[k].click(); }
-    document.getElementById('lbPrev').addEventListener('click', () => go(idx() - 1));
-    document.getElementById('lbNext').addEventListener('click', () => go(idx() + 1));
-    // Nav scroll
-    document.querySelectorAll('.nav-buttons button').forEach(btn => btn.addEventListener('click', () => {
-      document.querySelectorAll('.nav-buttons button').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active'); document.getElementById(btn.dataset.target).scrollIntoView({behavior:'smooth'});
-    }));
+    // Navigation scroll
+    document.querySelectorAll('.nav-buttons button').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.nav-buttons button').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        document.getElementById(btn.getAttribute('data-target')).scrollIntoView({ behavior: 'smooth' });
+      });
+    });
   </script>
 </body>
 </html>
