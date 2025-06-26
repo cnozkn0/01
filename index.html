@@ -43,7 +43,8 @@
     .group table tr:nth-child(even) { background: #fafafa; }
     /* Responsive single column */
     @media (max-width: 600px) {
-      .specs-grid { grid-template-columns: 1fr; }
+      .specs-container .specs-grid { display: block; }
+      .specs-container .group { width: 100%; margin-bottom: 20px; }
     }
   </style>
 </head>
