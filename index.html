@@ -158,22 +158,36 @@
 
   </div>
   <script>
-    // Thumbnail click to change main image
-    document.querySelectorAll('.thumbnails img').forEach(thumb => {
-      thumb.addEventListener('click', () => {
-        document.querySelectorAll('.thumbnails img').forEach(t => t.classList.remove('active'));
-        thumb.classList.add('active');
-        document.getElementById('mainImage').src = thumb.dataset.large;
-      });
+    // Thumbnail <-> main image
+    document.querySelectorAll('.thumbnails img').forEach(thumb => thumb.addEventListener('click', () => {
+      document.querySelectorAll('.thumbnails img').forEach(t => t.classList.remove('active'));
+      thumb.classList.add('active'); document.getElementById('mainImage').src = thumb.dataset.large;
+    }));
+    // Lightbox open
+    const main = document.getElementById('mainImage'), lightbox = document.getElementById('lightbox'), lbImg = document.getElementById('lightboxImage');
+    const lbThumbs = document.querySelectorAll('.lb-thumbnails img');
+    main.addEventListener('click', () => {
+      lightbox.classList.add('open'); lbImg.src = main.src;
+      lbThumbs.forEach(t => t.classList.toggle('active', t.dataset.large === lbImg.src));
     });
-    // Navigation scroll
-    document.querySelectorAll('.nav-buttons button').forEach(btn => {
-      btn.addEventListener('click', () => {
-        document.querySelectorAll('.nav-buttons button').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        document.getElementById(btn.getAttribute('data-target')).scrollIntoView({ behavior: 'smooth' });
-      });
-    });
+    // Lightbox close
+    document.querySelector('.close').addEventListener('click', () => lightbox.classList.remove('open'));
+    // Lightbox thumbnail click
+    lbThumbs.forEach(thumb => thumb.addEventListener('click', () => {
+      lbThumbs.forEach(t => t.classList.remove('active'));
+      thumb.classList.add('active'); lbImg.src = thumb.dataset.large;
+    }));
+    // Prev/Next
+    function idx() { return Array.from(lbThumbs).findIndex(t => t.dataset.large === lbImg.src); }
+    function go(i) { const k = (i + lbThumbs.length) % lbThumbs.length; lbThumbs[k].click(); }
+    document.getElementById('lbPrev').addEventListener('click', () => go(idx() - 1));
+    document.getElementById('lbNext').addEventListener('click', () => go(idx() + 1));
+    // Nav scroll
+    document.querySelectorAll('.nav-buttons button').forEach(btn => btn.addEventListener('click', () => {
+      document.querySelectorAll('.nav-buttons button').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active'); document.getElementById(btn.dataset.target).scrollIntoView({behavior:'smooth'});
+    }));
   </script>
+
 </body>
 </html>
